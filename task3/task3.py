@@ -8,9 +8,7 @@ def func(item_list):
 	global file_value
 	for item in item_list:
 		if "value" in item:
-			for val in file_value["values"]:
-				if val["id"] == item["id"]:
-					item["value"] = val["value"]
+			item["value"] = file_value[item["id"]]
 		if "values" in item:
 			func(item["values"])
 
@@ -29,9 +27,11 @@ if __name__ == '__main__':
 		file_test = json.load(path1)
 
 	with open(input_params.file_path_2) as path2:
-		file_value = json.load(path2)
+		file_value_ = json.load(path2)
 
-
+	file_value = {}
+	for val in file_value_["values"]:
+		file_value[val["id"]] = val["value"]
 
 	func(file_test["tests"])
 
